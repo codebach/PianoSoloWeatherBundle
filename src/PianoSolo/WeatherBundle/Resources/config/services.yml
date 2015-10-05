@@ -7,13 +7,9 @@ services:
     pianosolo.weather.service.weather.open:
         class: PianoSolo\WeatherBundle\Service\Weather\OpenWeatherMapService
         arguments: ["@pianosolo.weather.service.httpclient.guzzle"]
-    pianosolo.weather.service.weather.yahoo:
-        class: PianoSolo\WeatherBundle\Service\Weather\YahooWeatherService
-        arguments: ["@pianosolo.weather.service.httpclient.guzzle"]
     pianosolo.weather.handler.weather:
         class: PianoSolo\WeatherBundle\Handler\WeatherHandler
-        arguments: ["@pianosolo.weather.service.weather.open"] # To use Open Weather Service
-        #arguments: ["@pianosolo.weather.service.weather.yahoo"] # To use Yahoo Weather Service
+        arguments: ["@pianosolo.weather.service.weather.open"] # To use Open Weather Map Service
     
     pianosolo.weather.twig.weather:
         class: PianoSolo\WeatherBundle\Twig\WeatherExtension
