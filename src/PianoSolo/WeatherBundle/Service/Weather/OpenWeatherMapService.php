@@ -5,6 +5,11 @@ namespace PianoSolo\WeatherBundle\Service\Weather;
 use PianoSolo\WeatherBundle\Entity\Weather;
 use PianoSolo\WeatherBundle\Service\HttpClient\HttpClientInterface;
 
+/**
+ * Gets weather and forecast from OpenWeatherMap Api
+ * 
+ * @author Ahmet Akbana
+ */
 class OpenWeatherMapService implements WeatherServiceInterface
 {
 	/**
@@ -31,7 +36,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	}
 	
 	/**
-	 * Gets data from OpenWeatherMap Api
+	 * Gets data
 	 * 
 	 * @param string $type
 	 * @param Array $param
@@ -55,7 +60,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	 * Gets City data
 	 * 
 	 * @param string $type
-	 * @param mixed (int|string) $city
+	 * @param mixed (integer|string) $city
 	 * @param Array $param
 	 * @return Array Weathers
 	 */

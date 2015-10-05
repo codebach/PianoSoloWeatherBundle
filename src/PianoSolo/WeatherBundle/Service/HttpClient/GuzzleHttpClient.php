@@ -4,6 +4,11 @@ namespace PianoSolo\WeatherBundle\Service\HttpClient;
 
 use Guzzle\Http\Client;
 
+/**
+ * GuzzleHttpClient for Requesting Api
+ * 
+ * @author Ahmet Akbana
+ */
 class GuzzleHttpClient implements HttpClientInterface
 {
 	/**

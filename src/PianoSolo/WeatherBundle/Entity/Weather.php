@@ -4,6 +4,8 @@ namespace PianoSolo\WeatherBundle\Entity;
 
 /**
  * Entity Weather
+ * 
+ * @author Ahmet Akbana
  */
 class Weather
 {

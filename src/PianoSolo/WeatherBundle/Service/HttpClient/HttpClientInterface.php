@@ -2,6 +2,11 @@
 
 namespace PianoSolo\WeatherBundle\Service\HttpClient;
 
+/**
+ * Client for Requesting api
+ * 
+ * @author Ahmet Akbana
+ */
 interface HttpClientInterface
 {
 	/**

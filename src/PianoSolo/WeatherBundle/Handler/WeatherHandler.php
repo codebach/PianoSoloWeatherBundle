@@ -6,6 +6,8 @@ use PianoSolo\WeatherBundle\Service\Weather\WeatherServiceInterface;
 
 /**
  * Gets data from Weather Services
+ * 
+ * @author Ahmet Akbana
  */
 class WeatherHandler
 {
