@@ -7,12 +7,12 @@ services:
     pianosolo.weather.service.weather.open:
         class: PianoSolo\WeatherBundle\Service\Weather\OpenWeatherMapService
         arguments: ["@pianosolo.weather.service.httpclient.guzzle"]
-    pianosolo.weather.handler.weather:
+    pianosolo.weather:
         class: PianoSolo\WeatherBundle\Handler\WeatherHandler
         arguments: ["@pianosolo.weather.service.weather.open"] # To use Open Weather Map Service
     
     pianosolo.weather.twig.weather:
         class: PianoSolo\WeatherBundle\Twig\WeatherExtension
-        arguments: ["@pianosolo.weather.service.weather.open"]
+        arguments: ["@pianosolo.weather"]
         tags:
             - { name:twig.extension }

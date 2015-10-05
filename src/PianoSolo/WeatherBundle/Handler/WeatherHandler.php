@@ -25,14 +25,27 @@ class WeatherHandler
 	}
 	
 	/**
-	 * Gets the weathers of city
+	 * Gets the weather list of a city
 	 * 
-	 * @param string $city
+	 * @param mixed (integer|string) $city
 	 * @return array of Weathers
 	 */
-	public function getForecast($city)
+	public function getForecast($city, $days = 3)
 	{
-		$weathers = $this->weatherService->getForecast($city);
+		$weathers = $this->weatherService->getForecast($city, $days);
+		
+		return $weathers;
+	}
+	
+	/**
+	 * Gets the weather of a city
+	 * 
+	 * @param mixed (integer|string) $city
+	 * @return array of Weathers 
+	 */
+	public function getWeather($city)
+	{
+		$weathers = $this->weatherService->getWeather($city);
 		
 		return $weathers;
 	}

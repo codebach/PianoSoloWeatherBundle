@@ -11,12 +11,9 @@ class WeatherController extends Controller
     public function indexAction(Request $request)
     {
     	$city = '';
-    	$weathers = '';
 		
     	if($request->getMethod() == 'POST'){
-    		
 			$city = $request->get('city');
-
     	}
 		
         return $this->render('PianoSoloWeatherBundle:Weather:index.html.twig', array(
@@ -29,7 +26,7 @@ class WeatherController extends Controller
 		if ($weathers = $this->get('cache')->fetch($city)) {
 		    $weathers = unserialize($weathers);
 		} else {
-			$weatherHandler = $this->get('pianosolo.weather.handler.weather');
+			$weatherHandler = $this->get('pianosolo.weather');
 			$weathers = $weatherHandler->getForecast($city);
 		    $this->get('cache')->save($city, serialize($weathers), 3600);
 		}

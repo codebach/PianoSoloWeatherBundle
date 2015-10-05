@@ -3,7 +3,7 @@
 namespace PianoSolo\WeatherBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use PianoSolo\WeatherBundle\Service\Weather\WeatherServiceInterface;
+use PianoSolo\WeatherBundle\Handler\WeatherHandler;
 
 /**
  * Twig extension for rendering weather
@@ -13,16 +13,16 @@ use PianoSolo\WeatherBundle\Service\Weather\WeatherServiceInterface;
 class WeatherExtension extends \Twig_Extension
 {
 	/**
-	 * @var WeatherServiceInterface
+	 * @var WeatherHandler
 	 */
-	private $weatherService;
+	private $weatherHandler;
 	
 	/**
-	 * @param WeatherServiceInterface $weatherService
+	 * @param WeatherHandler $weatherHandler
 	 */
-	public function __construct(WeatherServiceInterface $weatherService)
+	public function __construct(WeatherHandler $weatherHandler)
 	{
-		$this->weatherService = $weatherService;
+		$this->weatherHandler = $weatherHandler;
 	}
 	
 	public function getFunctions()
@@ -48,7 +48,7 @@ class WeatherExtension extends \Twig_Extension
 	 */
 	public function weather(\Twig_Environment $environment, $city)
 	{
-		$weathers = $this->weatherService->getWeather($city);
+		$weathers = $this->weatherHandler->getWeather($city);
 		
 		return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
 			'weathers' => $weathers
@@ -65,7 +65,7 @@ class WeatherExtension extends \Twig_Extension
 	 */
 	public function forecast(\Twig_Environment $environment, $city, $days = '3')
 	{
-		$weathers = $this->weatherService->getForecast($city, $days);
+		$weathers = $this->weatherHandler->getForecast($city, $days);
 		
 		return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
 			'city' => $city,
