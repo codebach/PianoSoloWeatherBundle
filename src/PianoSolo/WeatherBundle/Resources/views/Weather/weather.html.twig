@@ -1,0 +1,27 @@
+{% if weathers is not empty %}
+	<div>
+		Weather results for: <b>{{ city }}</b> 
+		<a href="{{ path('pianosolo_weather_generate_csv',{'city':city}) }}">Download as CSV</a>
+	</div>
+	</br>
+	<table>
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>City</th>
+				<th>Temperature</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+    	<tbody>
+		{% for weather in weathers %}
+			<tr>
+				<td>{{ weather.wdate }}</td>
+				<td>{{ weather.city }}</td>
+				<td>{{ weather.temperature }} &deg;C</td>
+				<td>{{ weather.description }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endif %}
