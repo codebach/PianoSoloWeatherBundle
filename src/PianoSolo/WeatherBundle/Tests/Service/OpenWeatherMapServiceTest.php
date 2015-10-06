@@ -48,7 +48,7 @@ class OpenWeatherMapServiceTest extends WebTestCase
 		foreach ($response as $weather) {
 			$this->assertTrue($weather->getCity() == 'Istanbul');
 			$this->assertTrue(is_numeric($weather->getTemperature()));
-			$this->assertTrue(date('d-m-Y', strtotime($weather->getWdate())) == $forecast->getWdate());
+			$this->assertTrue(date('d-m-Y', strtotime($weather->getWdate())) == $weather->getWdate());
 			$this->assertTrue($weather->getDescription() !== '');
 		}
 	}
