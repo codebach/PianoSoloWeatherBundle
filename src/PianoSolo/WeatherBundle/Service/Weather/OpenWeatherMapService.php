@@ -107,11 +107,11 @@ class OpenWeatherMapService implements WeatherServiceInterface
 		$results = $this->getForecast($city, $days);
 		
 		if($results->cod == '200'){
-			$date = date("Y-m-d");
+			$date = date("d-m-Y");
 			foreach ($results->list as $list) {
 				
 				if(count($this->weathers)>0){
-					$date = strftime("%Y-%m-%d", strtotime("$date +1 day"));
+					$date = strftime("%d-%m-%Y", strtotime("$date +1 day"));
 				}
 				
 				$newWeather = new Weather();

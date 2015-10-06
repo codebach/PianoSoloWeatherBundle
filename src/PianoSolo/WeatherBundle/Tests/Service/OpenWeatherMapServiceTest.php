@@ -32,8 +32,6 @@ class OpenWeatherMapServiceTest extends WebTestCase
     {
 		$response = $this->service->getWeather('istanbul');
 		
-		var_dump($response);
-		
 		$this->assertTrue($response->cod === 200);
 		$this->assertTrue($response->name === 'Istanbul');
 		$this->assertEquals(1, count($response->weather));
@@ -50,7 +48,7 @@ class OpenWeatherMapServiceTest extends WebTestCase
 		foreach ($response as $weather) {
 			$this->assertTrue($weather->getCity() == 'Istanbul');
 			$this->assertTrue(is_numeric($weather->getTemperature()));
-			$this->assertTrue(date('Y-m-d', strtotime($weather->getWdate())) == $forecast->getWdate());
+			$this->assertTrue(date('d-m-Y', strtotime($weather->getWdate())) == $forecast->getWdate());
 			$this->assertTrue($weather->getDescription() !== '');
 		}
 	}
@@ -80,7 +78,7 @@ class OpenWeatherMapServiceTest extends WebTestCase
 		foreach ($response as $forecast) {
 			$this->assertTrue($forecast->getCity() == 'Istanbul');
 			$this->assertTrue(is_numeric($forecast->getTemperature()));
-			$this->assertTrue(date('Y-m-d', strtotime($forecast->getWdate())) == $forecast->getWdate());
+			$this->assertTrue(date('d-m-Y', strtotime($forecast->getWdate())) == $forecast->getWdate());
 			$this->assertTrue($forecast->getDescription() !== '');
 		}
 	}
