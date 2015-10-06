@@ -27,7 +27,7 @@ class WeatherController extends Controller
 		    $weathers = unserialize($weathers);
 		} else {
 			$weatherHandler = $this->get('pianosolo.weather');
-			$weathers = $weatherHandler->getForecast($city);
+			$weathers = $weatherHandler->getForecastObject($city);
 		    $this->get('cache')->save($city, serialize($weathers), 3600);
 		}
 		

@@ -88,7 +88,22 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	 */
 	public function getWeatherObject($city)
 	{
-		return $this->getCityData('weather', $city);
+		$results = $this->getWeather($city);
+		
+		if($results->cod === 200){
+			$date = date("d-m-Y");
+				
+			$newWeather = new Weather();
+			$newWeather->setCity($results->name);
+			$newWeather->setWdate($date);
+			$newWeather->setDescription($results->weather[0]->main);
+			$cTemp = $results->main->temp-273; //Celcius
+			$newWeather->setTemperature(number_format($cTemp,1));
+				
+			$this->weathers[] = $newWeather;
+		}
+		
+		return $this->weathers;
 	}
 	
 	/**
@@ -106,7 +121,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	{
 		$results = $this->getForecast($city, $days);
 		
-		if($results->cod == '200'){
+		if($results->cod === '200'){
 			$date = date("d-m-Y");
 			foreach ($results->list as $list) {
 				
@@ -118,7 +133,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 				$newWeather->setCity($results->city->name);
 				$newWeather->setWdate($date);
 				$newWeather->setDescription($list->weather[0]->main);
-				$cTemp = $list->temp->day-273;
+				$cTemp = $list->temp->day-273; //Celcius
 				$newWeather->setTemperature(number_format($cTemp,1));
 				
 				$this->weathers[] = $newWeather;
