@@ -1,6 +1,6 @@
 <?php
 
-namespace PianoSolo\WeatherBundle\Handler;
+namespace PianoSolo\WeatherBundle\Factory;
 
 use PianoSolo\WeatherBundle\Service\Weather\WeatherServiceInterface;
 
@@ -9,7 +9,7 @@ use PianoSolo\WeatherBundle\Service\Weather\WeatherServiceInterface;
  * 
  * @author Ahmet Akbana
  */
-class WeatherHandler
+class WeatherFactory
 {
 	/**
 	 * @var WeatherServiceInterface
@@ -45,9 +45,7 @@ class WeatherHandler
 	 */
 	public function getForecastObject($city, $days = 3)
 	{
-		$weathers = $this->weatherService->getForecastObject($city, $days);
-		
-		return $weathers;
+		return $this->weatherService->getForecastObject($city, $days);
 	}
 	
 	/**
@@ -69,8 +67,6 @@ class WeatherHandler
 	 */
 	public function getWeatherObject($city)
 	{
-		$weathers = $this->weatherService->getWeatherObject($city);
-		
-		return $weathers;
+		return $this->weatherService->getWeatherObject($city);
 	}
 }
