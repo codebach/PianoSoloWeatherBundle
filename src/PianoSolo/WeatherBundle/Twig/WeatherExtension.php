@@ -48,7 +48,7 @@ class WeatherExtension extends \Twig_Extension
 	 */
 	public function weather(\Twig_Environment $environment, $city)
 	{
-		$weathers = $this->weatherHandler->getWeather($city);
+		$weathers = $this->weatherHandler->getWeatherObject($city);
 		
 		return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
 			'weathers' => $weathers
@@ -65,7 +65,7 @@ class WeatherExtension extends \Twig_Extension
 	 */
 	public function forecast(\Twig_Environment $environment, $city, $days = '3')
 	{
-		$weathers = $this->weatherHandler->getForecast($city, $days);
+		$weathers = $this->weatherHandler->getForecastObject($city, $days);
 		
 		return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
 			'city' => $city,

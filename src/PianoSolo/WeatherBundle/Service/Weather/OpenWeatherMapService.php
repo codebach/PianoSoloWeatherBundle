@@ -62,7 +62,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	 * @param string $type
 	 * @param mixed (integer|string) $city
 	 * @param Array $param
-	 * @return Array Weathers
+	 * @return stdClass
 	 */
 	public function getCityData($type, $city, $param = null)
 	{
@@ -86,9 +86,25 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	/**
 	 * @{inheritdoc}
 	 */
-	public function getForecast($city, $days='3')
+	public function getWeatherObject($city)
 	{
-		$results = $this->getCityData('forecast/daily', $city, array('cnt'=>$days));
+		return $this->getCityData('weather', $city);
+	}
+	
+	/**
+	 * @{inheritdoc}
+	 */
+	public function getForecast($city, $days = 3)
+	{
+		return $this->getCityData('forecast/daily', $city, array('cnt'=>$days));	
+	}
+	
+	/**
+	 * @{inheritdoc}
+	 */
+	public function getForecastObject($city, $days = 3)
+	{
+		$results = $this->getForecast($city, $days);
 		
 		if($results->cod == '200'){
 			$date = date("Y-m-d");
@@ -102,7 +118,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 				$newWeather->setCity($results->city->name);
 				$newWeather->setWdate($date);
 				$newWeather->setDescription($list->weather[0]->main);
-				$cTemp = $list->temp->day-273 ;
+				$cTemp = $list->temp->day-273;
 				$newWeather->setTemperature(number_format($cTemp,1));
 				
 				$this->weathers[] = $newWeather;
