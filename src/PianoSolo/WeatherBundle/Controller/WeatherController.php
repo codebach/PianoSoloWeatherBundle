@@ -3,24 +3,10 @@
 namespace PianoSolo\WeatherBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class WeatherController extends Controller
 {
-    public function indexAction(Request $request)
-    {
-    	$city = '';
-		
-    	if($request->getMethod() == 'POST'){
-			$city = $request->get('city');
-    	}
-		
-        return $this->render('PianoSoloWeatherBundle:Weather:index.html.twig', array(
-        	'city' => $city
-		));
-    }
-	
 	public function generateCsvAction($city){
  
 		if ($weathers = $this->get('cache')->fetch($city)) {

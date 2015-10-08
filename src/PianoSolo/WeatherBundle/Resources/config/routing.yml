@@ -1,6 +1,3 @@
-pianosolo_weather_homepage:
-    path:     /
-    defaults: { _controller: PianoSoloWeatherBundle:Weather:index }
 pianosolo_weather_generate_csv:
     path:     /csv/{city}
     defaults: { _controller: PianoSoloWeatherBundle:Weather:generateCSV }
