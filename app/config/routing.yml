@@ -1,3 +1,0 @@
-pianosolo_weather:
-    resource: "@PianoSoloWeatherBundle/Resources/config/routing.yml"
-
