@@ -13,3 +13,6 @@
 .status
 .project
 /.settings
+/app/
+/src/PianoSolo/DemoBundle/
+/web/
