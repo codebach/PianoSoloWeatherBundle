@@ -9,8 +9,6 @@ use Symfony\Component\DependencyInjection\Loader;
 
 /**
  * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class PianoSoloWeatherExtension extends Extension
 {
@@ -21,7 +19,10 @@ class PianoSoloWeatherExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
+		
+		$container->setParameter('pianosolo.weather.api_key', $config['api_key']);
+		$container->setParameter('pianosolo.weather.options.download_csv', $config['options']['download_csv']);
+		
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
