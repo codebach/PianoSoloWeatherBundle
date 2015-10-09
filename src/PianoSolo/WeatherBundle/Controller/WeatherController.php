@@ -3,44 +3,33 @@
 namespace PianoSolo\WeatherBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+
+use PianoSolo\WeatherBundle\Http\WeatherCsvResponse;
 
 class WeatherController extends Controller
 {
-	public function generateCsvAction($city){
- 
-		if ($weathers = $this->get('cache')->fetch($city)) {
-		    $weathers = unserialize($weathers);
-		} else {
+	/**
+	 * Downloads Weather List of City as CSV
+	 * 
+	 * @param mixed (integer|string) $city
+	 * @param integer $days
+	 */
+	public function generateCsvAction($city, $days){
+		
+		if($this->getParameter('pianosolo.weather.options.download_csv') === TRUE){
+			
 			$weatherHandler = $this->get('pianosolo.weather');
-			$weathers = $weatherHandler->getForecastObject($city);
-		    $this->get('cache')->save($city, serialize($weathers), 3600);
-		}
-		
-		if(!empty($weathers)){
-		
-			$handle = fopen('php://memory', 'r+');
-        	$header = array();
-		
-			fputcsv($handle, array('Date', 'City', 'Temperature', 'Description'));
-	        foreach ($weathers as $weather) {
-	            fputcsv($handle, array(
-	            	$weather->getWdate(),
-	            	$weather->getCity(),
-	            	$weather->getTemperature(),
-	            	$weather->getDescription()
-				));
-	        }
-	
-	        rewind($handle);
-	        $content = stream_get_contents($handle);
-	        fclose($handle);
-	        
-	        return new Response($content, 200, array(
-	            'Content-Type' => 'application/force-download',
-	            'Content-Disposition' => 'attachment; filename="'.$city.'.csv"'
-	        ));
-		
+			$weathers = $weatherHandler->getForecastObject($city, $days);
+			
+			if(!empty($weathers)){
+			 
+			 	// Creating CSV Response
+				$csvResponse = new WeatherCsvResponse($weathers, $city);
+				return $csvResponse->createCsvResponse();
+			
+			}else{
+				throw $this->createNotFoundException('City Not Found!');
+			}
 		}else{
 			throw $this->createNotFoundException('Page Not Found!');
 		}

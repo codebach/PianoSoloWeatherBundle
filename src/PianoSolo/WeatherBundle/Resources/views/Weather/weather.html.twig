@@ -1,7 +1,7 @@
 {% if weathers is not empty %}
 	<div>
 		Weather results for: <b>{{ city }}</b> 
-		<a href="{{ path('pianosolo_weather_generate_csv',{'city':city}) }}">Download as CSV</a>
+		<a href="{{ path('pianosolo_weather_generate_csv',{'city':city, 'days':weathers|length}) }}">Download as CSV</a>
 	</div>
 	</br>
 	<table class="table">
