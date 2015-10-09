@@ -18,6 +18,11 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	private $apiUrl = 'http://api.openweathermap.org/data/2.5/';
 	
 	/**
+	 * @var string
+	 */
+	private $apiKey;
+	
+	/**
 	 * @var HttpClientInterface
 	 */
 	private $httpClient;
@@ -30,9 +35,10 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	/**
 	 * @param HttpClientInterface $httpClient
 	 */
-	public function __construct(HttpClientInterface $httpClient)
+	public function __construct(HttpClientInterface $httpClient, $apiKey)
 	{
 		$this->httpClient = $httpClient;
+		$this->apiKey = $apiKey;
 	}
 	
 	/**
@@ -44,6 +50,10 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	 */
 	public function getData($type, Array $param = null)
 	{
+		if(!isset($param['APPID'])){
+			$param['APPID'] = $this->apiKey;
+		}
+		
 		$url = $this->apiUrl.$type.'?';
 		
 		$urlKeys = array();

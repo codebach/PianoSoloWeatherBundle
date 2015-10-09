@@ -6,7 +6,7 @@ services:
         class: PianoSolo\WeatherBundle\Service\HttpClient\GuzzleHttpClient
     pianosolo.weather.service.weather.open:
         class: PianoSolo\WeatherBundle\Service\Weather\OpenWeatherMapService
-        arguments: ["@pianosolo.weather.service.httpclient.guzzle"]
+        arguments: ["@pianosolo.weather.service.httpclient.guzzle","%pianosolo.weather.api_key%"]
     pianosolo.weather:
         class: PianoSolo\WeatherBundle\Factory\WeatherFactory
         arguments: ["@pianosolo.weather.service.weather.open"] # To use Open Weather Map Service
