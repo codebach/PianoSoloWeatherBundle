@@ -3,6 +3,7 @@
 namespace PianoSolo\WeatherBundle\Twig;
 
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use PianoSolo\WeatherBundle\Factory\WeatherFactory;
 
 /**
@@ -18,11 +19,17 @@ class WeatherExtension extends \Twig_Extension
 	private $weatherFactroy;
 	
 	/**
+	 * @var ContainerInterface
+	 */
+	private $container;
+	
+	/**
 	 * @param WeatherHandler $weatherHandler
 	 */
-	public function __construct(WeatherFactory $weatherFactroy)
+	public function __construct(WeatherFactory $weatherFactroy, ContainerInterface $container)
 	{
 		$this->weatherFactroy = $weatherFactroy;
+		$this->container = $container;
 	}
 	
 	public function getFunctions()
@@ -50,8 +57,11 @@ class WeatherExtension extends \Twig_Extension
 	{
 		$weathers = $this->weatherFactroy->getWeatherObject($city);
 		
+		$downloadEnabled = $this->container->getParameter('pianosolo.weather.options.download_csv');
+		
 		return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
-			'weathers' => $weathers
+			'weathers' => $weathers,
+			'downloadEnabled' => $downloadEnabled
 		));
 	}
 	
@@ -67,9 +77,12 @@ class WeatherExtension extends \Twig_Extension
 	{
 		$weathers = $this->weatherFactroy->getForecastObject($city, $days);
 		
+		$downloadEnabled = $this->container->getParameter('pianosolo.weather.options.download_csv');
+		
 		return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
 			'city' => $city,
-			'weathers' => $weathers
+			'weathers' => $weathers,
+			'downloadEnabled' => $downloadEnabled
 		));
 	}
 	

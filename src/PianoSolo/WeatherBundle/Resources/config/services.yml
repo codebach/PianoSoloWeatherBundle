@@ -1,17 +1,21 @@
 services:
-    cache:
+    # Doctrine ApcCache Service
+    pianosolo.weather.cache:
         class: Doctrine\Common\Cache\ApcCache
-        
+    # Guzzle Http Service
     pianosolo.weather.service.httpclient.guzzle:
         class: PianoSolo\WeatherBundle\Service\HttpClient\GuzzleHttpClient
+    # OpenWeatherMap Service
     pianosolo.weather.service.weather.open:
         class: PianoSolo\WeatherBundle\Service\Weather\OpenWeatherMapService
         arguments: ["@pianosolo.weather.service.httpclient.guzzle","%pianosolo.weather.api_key%"]
+    # PianoSolo Weather Service
     pianosolo.weather:
         class: PianoSolo\WeatherBundle\Factory\WeatherFactory
-        arguments: ["@pianosolo.weather.service.weather.open"] # To use Open Weather Map Service
+        arguments: ["@pianosolo.weather.service.weather.open","@service_container"] # To use Open Weather Map Service
+    # PianoSolo Weather Twig Extension Service
     pianosolo.weather.twig.weather:
         class: PianoSolo\WeatherBundle\Twig\WeatherExtension
-        arguments: ["@pianosolo.weather"]
+        arguments: ["@pianosolo.weather","@service_container"]
         tags:
             - { name:twig.extension }

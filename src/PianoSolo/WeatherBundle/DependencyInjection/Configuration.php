@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
 					->addDefaultsIfNotSet()
 					->children()
 						->scalarNode('download_csv')->defaultTrue()->end()
+						->scalarNode('cache')->defaultFalse()->end()
 					->end()
 				->end()
 			->end()
