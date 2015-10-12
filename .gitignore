@@ -6,3 +6,5 @@
 /web/
 /.settings
 .project
+composer1.json
+composer.lock
