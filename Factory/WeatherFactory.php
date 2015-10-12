@@ -44,7 +44,7 @@ class WeatherFactory
 		// Cheking if cache is enabled
 		if($this->container->getParameter('pianosolo.weather.options.cache') === TRUE){
 			
-			$cacheID = $city.$days;
+			$cacheID = $city.$days.'fc';
 			
 			if(!$weathers = $this->getCache($cacheID)){
 				$weathers = $this->weatherService->getForecast($city, $days);
@@ -69,7 +69,7 @@ class WeatherFactory
 		// Cheking if cache is enabled
 		if($this->container->getParameter('pianosolo.weather.options.cache') === TRUE){
 			
-			$cacheID = $city.$days;
+			$cacheID = $city.$days.'fcO';
 			
 			if(!$weathers = $this->getCache($cacheID)){
 				$weathers = $this->weatherService->getForecastObject($city, $days);
@@ -92,7 +92,7 @@ class WeatherFactory
 		// Cheking if cache is enabled
 		if($this->container->getParameter('pianosolo.weather.options.cache') === TRUE){
 			
-			$cacheID = $city;
+			$cacheID = $city.'w';
 			
 			if(!$weather = $this->getCache($cacheID)){
 				$weather = $this->weatherService->getWeather($city);
@@ -115,7 +115,7 @@ class WeatherFactory
 		// Cheking if cache is enabled
 		if($this->container->getParameter('pianosolo.weather.options.cache') === TRUE){
 			
-			$cacheID = $city;
+			$cacheID = $city.'wO';
 			
 			if(!$weather = $this->getCache($cacheID)){
 				$weather = $this->weatherService->getWeatherObject($city);
