@@ -17,14 +17,14 @@ class PianoSoloWeatherExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+		$configuration = new Configuration();
+		$config = $this->processConfiguration($configuration, $configs);
 		
 		$container->setParameter('pianosolo.weather.api_key', $config['api_key']);
 		$container->setParameter('pianosolo.weather.options.download_csv', $config['options']['download_csv']);
 		$container->setParameter('pianosolo.weather.options.cache', $config['options']['cache']);
 		
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+		$loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+		$loader->load('services.yml');
     }
 }

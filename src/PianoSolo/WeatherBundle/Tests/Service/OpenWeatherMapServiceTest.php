@@ -28,15 +28,15 @@ class OpenWeatherMapServiceTest extends WebTestCase
 	/**
 	 * Tests get Weather as stdclass
 	 */
-    public function testGetWeather()
-    {
+	public function testGetWeather()
+	{
 		$response = $this->service->getWeather('istanbul');
 		
 		$this->assertTrue($response->cod === 200);
 		$this->assertTrue($response->name === 'Istanbul');
 		$this->assertEquals(1, count($response->weather));
 		
-    }
+	}
 	
 	/**
 	 * Tests get Weather as Weather object

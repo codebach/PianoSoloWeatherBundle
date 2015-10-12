@@ -44,18 +44,18 @@ class WeatherCsvResponse extends Response
 		$handle = fopen('php://memory', 'r+');
 			
 		fputcsv($handle, array('Date', 'City', 'Temperature', 'Description'));
-        foreach ($this->weathers as $weather) {
-            fputcsv($handle, array(
-            	$weather->getWdate(),
-            	$weather->getCity(),
-            	$weather->getTemperature(),
-            	$weather->getDescription()
+		foreach ($this->weathers as $weather) {
+		    fputcsv($handle, array(
+		    	$weather->getWdate(),
+		    	$weather->getCity(),
+		    	$weather->getTemperature(),
+		    	$weather->getDescription()
 			));
-        }
-
-        rewind($handle);
-        $content = stream_get_contents($handle);
-        fclose($handle);
+		}
+		
+		rewind($handle);
+		$content = stream_get_contents($handle);
+		fclose($handle);
 		
 		$this->setCharset('ISO-8859-2');
 		$this->headers->set('Content-Type', 'text/csv; charset=UTF-8');

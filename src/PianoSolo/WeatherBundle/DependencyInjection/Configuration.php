@@ -15,11 +15,11 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pianosolo_weather');
-
-        $rootNode
-        	->children()
+		$treeBuilder = new TreeBuilder();
+		$rootNode = $treeBuilder->root('pianosolo_weather');
+		
+		$rootNode
+			->children()
 				->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
 				->arrayNode('options')
 					->addDefaultsIfNotSet()
@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
 			->end()
 		;
 				
-
-        return $treeBuilder;
+		
+		return $treeBuilder;
     }
 }
