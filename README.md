@@ -9,13 +9,13 @@ as a Twig Extension and the second one as a service which brings all weather inf
 
 ### Installation 
 
-1-)Tell composer to download by running the command:
+1-) Tell composer to download by running the command:
 
 ```bash
 composer require pianosolo/weather-bundle
 ```
  
-2-)Add the bundle to AppKernel
+2-) Add the bundle to AppKernel
 
 ```php
 <?php
@@ -30,11 +30,11 @@ public function registerBundles()
 }
 ```
 	
-3-)Add configuration to config.yml file
+3-) Add configuration to config.yml file
 
 ```yaml
 piano_solo_weather:
-	api_key: "c2388fd461bcbaec4448d227e27cc8d1" # Required (OpenWeatherMap Api Key)
+	api_key: "YourApiKey" # Required (OpenWeatherMap Api Key)
 	options:
     	download_csv: false # Default True
     	cache: true # Default False (To use cache the system needs Php-Apc cache)
@@ -46,7 +46,7 @@ To install Php-Apc rund this command:
 sudo apt-get install php-apc
 ```
 	
-4-)Add the routing for CSV Downloading to routing.yml
+4-) Add the routing for CSV Downloading to routing.yml
 
 ```yaml
 pianosolo_weather:
@@ -55,7 +55,7 @@ pianosolo_weather:
 
 ### Usage
 
-#### As Twig Extension
+##### As Twig Extension
 
 It brings the daily forecasts as html formatted in bootstrap table. 
 
@@ -71,7 +71,7 @@ This brings 5 days weather information of Istanbul ( Date, City, Temperature, De
     
 This brings 1 day of weather reasults of Istanbul.
     
-### As Weather Service
+#### As Weather Service
 
 1-) Get weather response as stdclass object
 
@@ -92,14 +92,14 @@ $temperatarue = $WeatherObject->getTemperetare();
 $description = $WeatherObject->getDescription();
 ```
 
-1-) Get forecast response as stdclass object
+3-) Get forecast response as stdclass object
 
 ``` php
 $weatherService = $this->get('pianosolo.weather');
 $weather = $weatherService->getForecast('Istanbul', 2); // 2 days weather results of the city
 ```
 
-2-) Get forecast as weather object array
+4-) Get forecast as weather object array
 
 ``` php
 $weatherService = $this->get('pianosolo.weather');
