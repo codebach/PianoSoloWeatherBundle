@@ -60,6 +60,7 @@ class WeatherExtension extends \Twig_Extension
 		$downloadEnabled = $this->container->getParameter('pianosolo.weather.options.download_csv');
 		
 		return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
+			'city' => $city,
 			'weathers' => $weathers,
 			'downloadEnabled' => $downloadEnabled
 		));
