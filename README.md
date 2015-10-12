@@ -69,7 +69,7 @@ This brings 5 days weather information of Istanbul ( Date, City, Temperature, De
 {{ pianosolo_get_weather('Istanbul') }}
 ```
     
-This brings 1 day of weather reasults of Istanbul.
+This brings 1 day of weather reasults of Istanbul ( Date, City, Temperature, Description )
     
 #### As Weather Service
 
@@ -88,7 +88,7 @@ $weathersArray = $weatherService->getWeatherObject('Istanbul');
 $weatherObject = $weathersArray[0];
 $city = $WeatherObject->getCity();
 $date = $WeatherObject->getWdate();
-$temperatarue = $WeatherObject->getTemperetare();
+$temperature = $WeatherObject->getTemperature();
 $description = $WeatherObject->getDescription();
 ```
 
@@ -107,7 +107,7 @@ $weathersArray = $weatherService->getForecastObject('Istanbul',2);
 foreach($weathersArray as $weatherObject){
 	$city = $WeatherObject->getCity();
 	$date = $WeatherObject->getWdate();
-	$temperatarue = $WeatherObject->getTemperetare();
+	$temperature = $WeatherObject->getTemperature();
 	$description = $WeatherObject->getDescription();
 	// Your Logic...
 }
