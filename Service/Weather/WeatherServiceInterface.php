@@ -10,6 +10,15 @@ namespace PianoSolo\WeatherBundle\Service\Weather;
 interface WeatherServiceInterface
 {
 	/**
+	 * Gets data from api
+	 * 
+	 * @param string $type
+	 * @param array $param
+	 * @return stdClass
+	 */
+	public function getData($type, $param);
+	
+	/**
 	 * Gets Weather
 	 * 
 	 * @param mixed (integer|string) $city
