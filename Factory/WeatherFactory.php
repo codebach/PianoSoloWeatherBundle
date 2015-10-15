@@ -45,6 +45,19 @@ class WeatherFactory
 	}
 	
 	/**
+	 * Gets data by city name or id from api
+	 * 
+	 * @param string $type
+	 * @param mixed (integer|string) $city
+	 * @param Array $param
+	 * @return stdClass
+	 */
+	public function getCityData($type, $city, Array $param = null)
+	{
+		return $this->weatherService->getCityData($type, $city, $param);
+	}
+	
+	/**
 	 * Gets the forecast as response
 	 * 
 	 * @param mixed (integer|string) $city

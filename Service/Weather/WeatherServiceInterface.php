@@ -19,6 +19,16 @@ interface WeatherServiceInterface
 	public function getData($type, $param);
 	
 	/**
+	 * Gets data by city name or id
+	 * 
+	 * @param string $type
+	 * @param mixed (integer|string) $city
+	 * @param Array $param
+	 * @return stdClass
+	 */
+	public function getCityData($type, $city, $param);
+	
+	/**
 	 * Gets Weather
 	 * 
 	 * @param mixed (integer|string) $city
