@@ -14,7 +14,7 @@ use PianoSolo\WeatherBundle\Factory\WeatherFactory;
 class WeatherExtension extends \Twig_Extension
 {
 	/**
-	 * @var WeatherHandler
+	 * @var WeatherFactory
 	 */
 	private $weatherFactroy;
 	
