@@ -2,7 +2,7 @@
 	<div>
 		Weather results for: <b>{{ city }}</b>
 		{% if downloadEnabled %}
-		<a href="{{ path('pianosolo_weather_generate_csv',{'city':city, 'days':weathers|length}) }}">Download as CSV</a>
+		<a href="{{ path('pianosolo_weather_generate_csv', {'city':city, 'days':weathers|length}) }}">Download as CSV</a>
 		{% endif %}
 	</div>
 	</br>
