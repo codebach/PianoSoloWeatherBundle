@@ -21,7 +21,7 @@ class OpenWeatherMapServiceTest extends WebTestCase
 	
 	public function __construct()
 	{
-        $client = new GuzzleHttpClient();
+        	$client = new GuzzleHttpClient();
 		$this->service = new OpenWeatherMapService($client);
 	}
 	
