@@ -3,7 +3,7 @@
 namespace PianoSolo\WeatherBundle\Factory;
 
 use PianoSolo\WeatherBundle\Service\Weather\WeatherServiceInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\Cache\ApcCache;
 
 /**
  * Gets data from Weather Services
@@ -18,18 +18,25 @@ class WeatherFactory
 	private $weatherService;
 	
 	/**
-	 * @var ContainerInterface
+	 * @var ApcCache
 	 */
-	private $container;
+	private $appCache;
+
+    /**
+     * @var boolean
+     */
+    private $cacheIsEnabled;
 	
 	/**
 	 * @param WeatherServiceInterface $weatherService
-	 * @param ContainerInterface $container
+	 * @param ApcCache $apcCache
+     * @param string $cacheIsEnabled
 	 */
-	public function __construct(WeatherServiceInterface $weatherService, ContainerInterface $container)
+	public function __construct(WeatherServiceInterface $weatherService, ApcCache $apcCache, $cacheIsEnabled)
 	{
 		$this->weatherService = $weatherService;
-		$this->container = $container;
+		$this->appCache = $apcCache;
+        $this->cacheIsEnabled = $cacheIsEnabled;
 	}
 	
 	/**
@@ -37,7 +44,7 @@ class WeatherFactory
 	 * 
 	 * @param string $type
 	 * @param array $param
-	 * @return stdClass
+	 * @return /stdClass
 	 */
 	public function getData($type, Array $param = null)
 	{
@@ -49,8 +56,8 @@ class WeatherFactory
 	 * 
 	 * @param string $type
 	 * @param mixed (integer|string) $city
-	 * @param Array $param
-	 * @return stdClass
+	 * @param array $param
+	 * @return /stdClass
 	 */
 	public function getCityData($type, $city, Array $param = null)
 	{
@@ -62,12 +69,12 @@ class WeatherFactory
 	 * 
 	 * @param mixed (integer|string) $city
 	 * @param int $days
-	 * @return stdClass
+	 * @return /stdClass
 	 */
 	public function getForecast($city, $days = 3)
 	{
 		// Cheking if cache is enabled
-		if($this->container->getParameter('pianosolo.weather.options.cache') === TRUE){
+		if($this->cacheIsEnabled){
 			
 			$cacheID = $city.$days.'fc';
 			
@@ -87,12 +94,12 @@ class WeatherFactory
 	 * 
 	 * @param mixed (integer|string) $city
 	 * @param int $days
-	 * @return Array Weather Object
+	 * @return array Weather Object
 	 */
 	public function getForecastObject($city, $days = 3)
 	{
 		// Cheking if cache is enabled
-		if($this->container->getParameter('pianosolo.weather.options.cache') === TRUE){
+        if($this->cacheIsEnabled){
 			
 			$cacheID = $city.$days.'fcO';
 			
@@ -110,12 +117,12 @@ class WeatherFactory
 	 * Gets the weather as response
 	 * 
 	 * @param mixed (integer|string) $city
-	 * @return stdClass
+	 * @return /stdClass
 	 */
 	public function getWeather($city)
 	{
-		// Cheking if cache is enabled
-		if($this->container->getParameter('pianosolo.weather.options.cache') === TRUE){
+        // Cheking if cache is enabled
+        if($this->cacheIsEnabled){
 			
 			$cacheID = $city.'w';
 			
@@ -137,8 +144,8 @@ class WeatherFactory
 	 */
 	public function getWeatherObject($city)
 	{
-		// Cheking if cache is enabled
-		if($this->container->getParameter('pianosolo.weather.options.cache') === TRUE){
+        // Cheking if cache is enabled
+        if($this->cacheIsEnabled){
 			
 			$cacheID = $city.'wO';
 			
@@ -160,9 +167,8 @@ class WeatherFactory
 	 */
 	private function getCache($cacheID)
 	{
-		$cache = $this->container->get('pianosolo.weather.cache');
-		if ($cache->contains($cacheID)) {
-			return unserialize($cache->fetch($cacheID));
+		if ($this->appCache->contains($cacheID)) {
+			return unserialize($this->appCache->fetch($cacheID));
 		}else{
 			return false;
 		}
@@ -176,7 +182,6 @@ class WeatherFactory
 	 */
 	private function saveCache($cacheID, $weather)
 	{
-		$cache = $this->container->get('pianosolo.weather.cache');
-		$cache->save($cacheID, serialize($weather), 3600);
+		$this->appCache->save($cacheID, serialize($weather), 3600);
 	}
 }

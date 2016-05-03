@@ -12,7 +12,7 @@ services:
     # PianoSolo Weather Service
     pianosolo.weather:
         class: PianoSolo\WeatherBundle\Factory\WeatherFactory
-        arguments: ["@pianosolo.weather.service.weather.open","@service_container"] # To use Open Weather Map Service
+        arguments: ["@pianosolo.weather.service.weather.open","@pianosolo.weather.cache","%pianosolo.weather.options.cache%"] # To use Open Weather Map Service
     # PianoSolo Weather Twig Extension Service
     pianosolo.weather.twig.weather:
         class: PianoSolo\WeatherBundle\Twig\WeatherExtension
