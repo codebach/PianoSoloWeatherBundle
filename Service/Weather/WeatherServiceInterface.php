@@ -14,7 +14,7 @@ interface WeatherServiceInterface
 	 * 
 	 * @param string $type
 	 * @param array $param
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function getData($type, $param);
 	
@@ -23,8 +23,8 @@ interface WeatherServiceInterface
 	 * 
 	 * @param string $type
 	 * @param mixed (integer|string) $city
-	 * @param Array $param
-	 * @return stdClass
+	 * @param array $param
+	 * @return \stdClass
 	 */
 	public function getCityData($type, $city, $param);
 	
@@ -32,7 +32,7 @@ interface WeatherServiceInterface
 	 * Gets Weather
 	 * 
 	 * @param mixed (integer|string) $city
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function getWeather($city);
 	
@@ -40,7 +40,7 @@ interface WeatherServiceInterface
 	 * Gets Weather as Object
 	 * 
 	 * @param mixed (integer|string) $city
-	 * @return Array Weather Object
+	 * @return array Weather Object
 	 */
 	public function getWeatherObject($city);
 	
@@ -49,7 +49,7 @@ interface WeatherServiceInterface
 	 * 
 	 * @param mixed (integer|string)$city
 	 * @param int $days
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	public function getForecast($city, $days);
 	
@@ -58,7 +58,7 @@ interface WeatherServiceInterface
 	 * 
 	 * @param mixed (integer|string) $city
 	 * @param int $days
-	 * @return Array Weather Object
+	 * @return array Weather Object
 	 */
 	public function getForecastObject($city, $days);
 }

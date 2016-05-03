@@ -40,15 +40,11 @@ class OpenWeatherMapService implements WeatherServiceInterface
 		$this->httpClient = $httpClient;
 		$this->apiKey = $apiKey;
 	}
-	
+
 	/**
-	 * Gets data
-	 * 
-	 * @param string $type
-	 * @param Array $param
-	 * @return stdClass
+	 * @{inheritdoc}
 	 */
-	public function getData($type, Array $param = null)
+	public function getData($type, $param = null)
 	{
 		if(!isset($param['APPID'])){
 			$param['APPID'] = $this->apiKey;
@@ -65,14 +61,9 @@ class OpenWeatherMapService implements WeatherServiceInterface
 		return json_decode($this->httpClient->getResponseBody($url));
 		
 	}
-	
+
 	/**
-	 * Gets City data
-	 * 
-	 * @param string $type
-	 * @param mixed (integer|string) $city
-	 * @param Array $param
-	 * @return stdClass
+	 * @{inheritdoc}
 	 */
 	public function getCityData($type, $city, $param = null)
 	{
