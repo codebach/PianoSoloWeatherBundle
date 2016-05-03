@@ -55,6 +55,22 @@ pianosolo_weather:
 
 ### Usage
 
+#### Basic Usage
+
+Gets data from OpenWeatherMap api. Check api for usage: http://openweathermap.org/api
+
+Get data with type
+``` php
+$weatherService = $this->get('pianosolo.weather');
+$weather = $weatherService->getData('forecast', array('id' => 12345, 'lat' => 12345, 'long' => 12345));
+```
+
+Or get data with city name and type
+``` php
+$weatherService = $this->get('pianosolo.weather');
+$weather = $weatherService->getCityData('weather', Berlin, array('param' => value));
+```
+
 ##### As Twig Extension
 
 It brings the daily forecasts as html formatted in bootstrap table. 
@@ -71,7 +87,7 @@ This brings 5 days weather information of Istanbul ( Date, City, Temperature, De
     
 This brings 1 day of weather reasults of Istanbul ( Date, City, Temperature, Description )
     
-#### As Weather Service
+##### As Weather Service
 
 1-) Get weather response as stdclass object
 
