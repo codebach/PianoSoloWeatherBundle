@@ -19,17 +19,17 @@ class WeatherExtension extends \Twig_Extension
     private $weatherFactory;
 
     /**
-     * @var ContainerInterface
+     * @var boolean
      */
-    private $container;
+    private $downloadEnabled;
 
     /**
      * @param WeatherFactory $weatherFactory
      */
-    public function __construct(WeatherFactory $weatherFactory, ContainerInterface $container)
+    public function __construct(WeatherFactory $weatherFactory, $downloadEnabled)
     {
         $this->weatherFactory = $weatherFactory;
-        $this->container = $container;
+        $this->downloadEnabled = $downloadEnabled;
     }
 
     public function getFunctions()
@@ -57,12 +57,10 @@ class WeatherExtension extends \Twig_Extension
     {
         $weathers = $this->weatherFactory->getWeatherObject($city);
 
-        $downloadEnabled = $this->container->getParameter('pianosolo.weather.options.download_csv');
-
         return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
             'city' => $city,
             'weathers' => $weathers,
-            'downloadEnabled' => $downloadEnabled
+            'downloadEnabled' => $this->downloadEnabled
         ));
     }
 
@@ -78,12 +76,10 @@ class WeatherExtension extends \Twig_Extension
     {
         $weathers = $this->weatherFactory->getForecastObject($city, $days);
 
-        $downloadEnabled = $this->container->getParameter('pianosolo.weather.options.download_csv');
-
         return $environment->render('PianoSoloWeatherBundle:Weather:weather.html.twig', array(
             'city' => $city,
             'weathers' => $weathers,
-            'downloadEnabled' => $downloadEnabled
+            'downloadEnabled' => $this->downloadEnabled
         ));
     }
 

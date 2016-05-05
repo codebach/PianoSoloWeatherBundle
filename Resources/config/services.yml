@@ -16,6 +16,6 @@ services:
     # PianoSolo Weather Twig Extension Service
     pianosolo.weather.twig.weather:
         class: PianoSolo\WeatherBundle\Twig\WeatherExtension
-        arguments: ["@pianosolo.weather","@service_container"]
+        arguments: ["@pianosolo.weather","%pianosolo.weather.options.download_csv%"]
         tags:
             - { name:twig.extension }
