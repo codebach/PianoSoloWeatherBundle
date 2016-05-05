@@ -2,7 +2,7 @@
 
 namespace PianoSolo\WeatherBundle\Tests\Service;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 use PianoSolo\WeatherBundle\Service\Weather\OpenWeatherMapService;
 use PianoSolo\WeatherBundle\Service\HttpClient\GuzzleHttpClient;
@@ -12,17 +12,23 @@ use PianoSolo\WeatherBundle\Service\HttpClient\GuzzleHttpClient;
  * 
  * @author Ahmet Akbana
  */
-class OpenWeatherMapServiceTest extends WebTestCase
+class OpenWeatherMapServiceTest extends KernelTestCase
 {
 	/**
 	 * @var OpenWeatherMapService
 	 */
 	private $service;
-	
-	public function __construct()
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function setUp()
 	{
-        	$client = new GuzzleHttpClient();
-		$this->service = new OpenWeatherMapService($client);
+		self::bootKernel();
+
+		$apiKey = static::$kernel->getContainer()->getParameter('pianosolo.weather.api_key');
+        $client = new GuzzleHttpClient();
+        $this->service = new OpenWeatherMapService($client, $apiKey);
 	}
 	
 	/**
