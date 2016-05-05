@@ -10,14 +10,14 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
-    {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getConfigTreeBuilder()
+	{
 		$treeBuilder = new TreeBuilder();
 		$rootNode = $treeBuilder->root('pianosolo_weather');
-		
+
 		$rootNode
 			->children()
 				->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
@@ -30,8 +30,8 @@ class Configuration implements ConfigurationInterface
 				->end()
 			->end()
 		;
-				
-		
+
+
 		return $treeBuilder;
-    }
+	}
 }

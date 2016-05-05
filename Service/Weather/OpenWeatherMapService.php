@@ -16,22 +16,22 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	 * @var string
 	 */
 	private $apiUrl = 'http://api.openweathermap.org/data/2.5/';
-	
+
 	/**
 	 * @var string
 	 */
 	private $apiKey;
-	
+
 	/**
 	 * @var HttpClientInterface
 	 */
 	private $httpClient;
-	
+
 	/**
 	 * @var array Weather
-	 */	
+	 */
 	private $weathers = array();
-	
+
 	/**
 	 * @param HttpClientInterface $httpClient
 	 */
@@ -49,17 +49,17 @@ class OpenWeatherMapService implements WeatherServiceInterface
 		if(!isset($param['APPID'])){
 			$param['APPID'] = $this->apiKey;
 		}
-		
+
 		$url = $this->apiUrl.$type.'?';
-		
+
 		$urlKeys = array();
 		foreach ($param as $key => $value) {
 			$urlKeys[] = $key.'='.rawurlencode($value);
 		}
 		$url .= implode('&', $urlKeys);
-		
+
 		return json_decode($this->httpClient->getResponseBody($url));
-		
+
 	}
 
 	/**
@@ -72,10 +72,10 @@ class OpenWeatherMapService implements WeatherServiceInterface
 		}else{
 			$param['q'] = $city;
 		}
-		
+
 		return $this->getData($type, $param);
 	}
-	
+
 	/**
 	 * @{inheritdoc}
 	 */
@@ -83,64 +83,64 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	{
 		return $this->getCityData('weather', $city);
 	}
-	
+
 	/**
 	 * @{inheritdoc}
 	 */
 	public function getWeatherObject($city)
 	{
 		$results = $this->getWeather($city);
-		
+
 		if($results->cod === 200){
 			$date = date("d-m-Y");
-				
+
 			$newWeather = new Weather();
 			$newWeather->setCity($results->name);
 			$newWeather->setWdate($date);
 			$newWeather->setDescription($results->weather[0]->main);
 			$cTemp = $results->main->temp-273; //Celcius
 			$newWeather->setTemperature(number_format($cTemp,1));
-				
+
 			$this->weathers[] = $newWeather;
 		}
-		
+
 		return $this->weathers;
 	}
-	
+
 	/**
 	 * @{inheritdoc}
 	 */
 	public function getForecast($city, $days = 3)
 	{
-		return $this->getCityData('forecast/daily', $city, array('cnt'=>$days));	
+		return $this->getCityData('forecast/daily', $city, array('cnt'=>$days));
 	}
-	
+
 	/**
 	 * @{inheritdoc}
 	 */
 	public function getForecastObject($city, $days = 3)
 	{
 		$results = $this->getForecast($city, $days);
-		
+
 		if($results->cod === '200'){
 			$date = date("d-m-Y");
 			foreach ($results->list as $list) {
-				
+
 				if(count($this->weathers)>0){
 					$date = strftime("%d-%m-%Y", strtotime("$date +1 day"));
 				}
-				
+
 				$newWeather = new Weather();
 				$newWeather->setCity($results->city->name);
 				$newWeather->setWdate($date);
 				$newWeather->setDescription($list->weather[0]->main);
 				$cTemp = $list->temp->day-273; //Celcius
 				$newWeather->setTemperature(number_format($cTemp,1));
-				
+
 				$this->weathers[] = $newWeather;
 			}
 		}
-		
+
 		return $this->weathers;
 	}
 }

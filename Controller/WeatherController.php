@@ -10,23 +10,23 @@ class WeatherController extends Controller
 {
 	/**
 	 * Downloads Weather List of City as CSV
-	 * 
+	 *
 	 * @param mixed (integer|string) $city
 	 * @param integer $days
 	 */
 	public function generateCsvAction($city, $days){
-		
+
 		if($this->getParameter('pianosolo.weather.options.download_csv') === TRUE){
-			
+
 			$weatherHandler = $this->get('pianosolo.weather');
 			$weathers = $weatherHandler->getForecastObject($city, $days);
-			
+
 			if(!empty($weathers)){
-			 
-			 	// Creating CSV Response
+
+				// Creating CSV Response
 				$csvResponse = new WeatherCsvResponse($weathers, $city);
 				return $csvResponse->createCsvResponse();
-			
+
 			}else{
 				throw $this->createNotFoundException('City Not Found!');
 			}
@@ -34,5 +34,4 @@ class WeatherController extends Controller
 			throw $this->createNotFoundException('Page Not Found!');
 		}
 	}
-	
 }
