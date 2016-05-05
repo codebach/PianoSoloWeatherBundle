@@ -12,135 +12,135 @@ use PianoSolo\WeatherBundle\Service\HttpClient\HttpClientInterface;
  */
 class OpenWeatherMapService implements WeatherServiceInterface
 {
-	/**
-	 * @var string
-	 */
-	private $apiUrl = 'http://api.openweathermap.org/data/2.5/';
+    /**
+     * @var string
+     */
+    private $apiUrl = 'http://api.openweathermap.org/data/2.5/';
 
-	/**
-	 * @var string
-	 */
-	private $apiKey;
+    /**
+     * @var string
+     */
+    private $apiKey;
 
-	/**
-	 * @var HttpClientInterface
-	 */
-	private $httpClient;
+    /**
+     * @var HttpClientInterface
+     */
+    private $httpClient;
 
-	/**
-	 * @var array Weather
-	 */
-	private $weathers = array();
+    /**
+     * @var array Weather
+     */
+    private $weathers = array();
 
-	/**
-	 * @param HttpClientInterface $httpClient
-	 */
-	public function __construct(HttpClientInterface $httpClient, $apiKey)
-	{
-		$this->httpClient = $httpClient;
-		$this->apiKey = $apiKey;
-	}
+    /**
+     * @param HttpClientInterface $httpClient
+     */
+    public function __construct(HttpClientInterface $httpClient, $apiKey)
+    {
+        $this->httpClient = $httpClient;
+        $this->apiKey = $apiKey;
+    }
 
-	/**
-	 * @{inheritdoc}
-	 */
-	public function getData($type, $param = null)
-	{
-		if(!isset($param['APPID'])){
-			$param['APPID'] = $this->apiKey;
-		}
+    /**
+     * @{inheritdoc}
+     */
+    public function getData($type, $param = null)
+    {
+        if(!isset($param['APPID'])){
+            $param['APPID'] = $this->apiKey;
+        }
 
-		$url = $this->apiUrl.$type.'?';
+        $url = $this->apiUrl.$type.'?';
 
-		$urlKeys = array();
-		foreach ($param as $key => $value) {
-			$urlKeys[] = $key.'='.rawurlencode($value);
-		}
-		$url .= implode('&', $urlKeys);
+        $urlKeys = array();
+        foreach ($param as $key => $value) {
+            $urlKeys[] = $key.'='.rawurlencode($value);
+        }
+        $url .= implode('&', $urlKeys);
 
-		return json_decode($this->httpClient->getResponseBody($url));
+        return json_decode($this->httpClient->getResponseBody($url));
 
-	}
+    }
 
-	/**
-	 * @{inheritdoc}
-	 */
-	public function getCityData($type, $city, $param = null)
-	{
-		if(is_numeric($city)){
-			$param['id'] = $city;
-		}else{
-			$param['q'] = $city;
-		}
+    /**
+     * @{inheritdoc}
+     */
+    public function getCityData($type, $city, $param = null)
+    {
+        if(is_numeric($city)){
+            $param['id'] = $city;
+        }else{
+            $param['q'] = $city;
+        }
 
-		return $this->getData($type, $param);
-	}
+        return $this->getData($type, $param);
+    }
 
-	/**
-	 * @{inheritdoc}
-	 */
-	public function getWeather($city)
-	{
-		return $this->getCityData('weather', $city);
-	}
+    /**
+     * @{inheritdoc}
+     */
+    public function getWeather($city)
+    {
+        return $this->getCityData('weather', $city);
+    }
 
-	/**
-	 * @{inheritdoc}
-	 */
-	public function getWeatherObject($city)
-	{
-		$results = $this->getWeather($city);
+    /**
+     * @{inheritdoc}
+     */
+    public function getWeatherObject($city)
+    {
+        $results = $this->getWeather($city);
 
-		if($results->cod === 200){
-			$date = date("d-m-Y");
+        if($results->cod === 200){
+            $date = date("d-m-Y");
 
-			$newWeather = new Weather();
-			$newWeather->setCity($results->name);
-			$newWeather->setWdate($date);
-			$newWeather->setDescription($results->weather[0]->main);
-			$cTemp = $results->main->temp-273; //Celcius
-			$newWeather->setTemperature(number_format($cTemp,1));
+            $newWeather = new Weather();
+            $newWeather->setCity($results->name);
+            $newWeather->setWdate($date);
+            $newWeather->setDescription($results->weather[0]->main);
+            $cTemp = $results->main->temp-273; //Celcius
+            $newWeather->setTemperature(number_format($cTemp,1));
 
-			$this->weathers[] = $newWeather;
-		}
+            $this->weathers[] = $newWeather;
+        }
 
-		return $this->weathers;
-	}
+        return $this->weathers;
+    }
 
-	/**
-	 * @{inheritdoc}
-	 */
-	public function getForecast($city, $days = 3)
-	{
-		return $this->getCityData('forecast/daily', $city, array('cnt'=>$days));
-	}
+    /**
+     * @{inheritdoc}
+     */
+    public function getForecast($city, $days = 3)
+    {
+        return $this->getCityData('forecast/daily', $city, array('cnt'=>$days));
+    }
 
-	/**
-	 * @{inheritdoc}
-	 */
-	public function getForecastObject($city, $days = 3)
-	{
-		$results = $this->getForecast($city, $days);
+    /**
+     * @{inheritdoc}
+     */
+    public function getForecastObject($city, $days = 3)
+    {
+        $results = $this->getForecast($city, $days);
 
-		if($results->cod === '200'){
-			$date = date("d-m-Y");
-			foreach ($results->list as $list) {
+        if($results->cod === '200'){
+            $date = date("d-m-Y");
+            foreach ($results->list as $list) {
 
-				if(count($this->weathers)>0){
-					$date = strftime("%d-%m-%Y", strtotime("$date +1 day"));
-				}
+                if(count($this->weathers)>0){
+                    $date = strftime("%d-%m-%Y", strtotime("$date +1 day"));
+                }
 
-				$newWeather = new Weather();
-				$newWeather->setCity($results->city->name);
-				$newWeather->setWdate($date);
-				$newWeather->setDescription($list->weather[0]->main);
-				$cTemp = $list->temp->day-273; //Celcius
-				$newWeather->setTemperature(number_format($cTemp,1));
+                $newWeather = new Weather();
+                $newWeather->setCity($results->city->name);
+                $newWeather->setWdate($date);
+                $newWeather->setDescription($list->weather[0]->main);
+                $cTemp = $list->temp->day-273; //Celcius
+                $newWeather->setTemperature(number_format($cTemp,1));
 
-				$this->weathers[] = $newWeather;
-			}
-		}
+                $this->weathers[] = $newWeather;
+            }
+        }
 
-		return $this->weathers;
-	}
+        return $this->weathers;
+    }
 }

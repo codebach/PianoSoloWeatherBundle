@@ -10,28 +10,27 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getConfigTreeBuilder()
-	{
-		$treeBuilder = new TreeBuilder();
-		$rootNode = $treeBuilder->root('pianosolo_weather');
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigTreeBuilder()
+    {
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('pianosolo_weather');
 
-		$rootNode
-			->children()
-				->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
-				->arrayNode('options')
-					->addDefaultsIfNotSet()
-					->children()
-						->scalarNode('download_csv')->defaultTrue()->end()
-						->scalarNode('cache')->defaultFalse()->end()
-					->end()
-				->end()
-			->end()
-		;
+        $rootNode
+            ->children()
+                ->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
+                ->arrayNode('options')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('download_csv')->defaultTrue()->end()
+                        ->scalarNode('cache')->defaultFalse()->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
-
-		return $treeBuilder;
-	}
+        return $treeBuilder;
+    }
 }

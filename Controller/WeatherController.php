@@ -8,30 +8,30 @@ use PianoSolo\WeatherBundle\Http\WeatherCsvResponse;
 
 class WeatherController extends Controller
 {
-	/**
-	 * Downloads Weather List of City as CSV
-	 *
-	 * @param mixed (integer|string) $city
-	 * @param integer $days
-	 */
-	public function generateCsvAction($city, $days){
+    /**
+     * Downloads Weather List of City as CSV
+     *
+     * @param mixed (integer|string) $city
+     * @param integer $days
+     */
+    public function generateCsvAction($city, $days){
 
-		if($this->getParameter('pianosolo.weather.options.download_csv') === TRUE){
+        if($this->getParameter('pianosolo.weather.options.download_csv') === TRUE){
 
-			$weatherHandler = $this->get('pianosolo.weather');
-			$weathers = $weatherHandler->getForecastObject($city, $days);
+            $weatherHandler = $this->get('pianosolo.weather');
+            $weathers = $weatherHandler->getForecastObject($city, $days);
 
-			if(!empty($weathers)){
+            if(!empty($weathers)){
 
-				// Creating CSV Response
-				$csvResponse = new WeatherCsvResponse($weathers, $city);
-				return $csvResponse->createCsvResponse();
+                // Creating CSV Response
+                $csvResponse = new WeatherCsvResponse($weathers, $city);
+                return $csvResponse->createCsvResponse();
 
-			}else{
-				throw $this->createNotFoundException('City Not Found!');
-			}
-		}else{
-			throw $this->createNotFoundException('Page Not Found!');
-		}
-	}
+            }else{
+                throw $this->createNotFoundException('City Not Found!');
+            }
+        }else{
+            throw $this->createNotFoundException('Page Not Found!');
+        }
+    }
 }
