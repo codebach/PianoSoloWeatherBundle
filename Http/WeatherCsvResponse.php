@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class WeatherCsvResponse extends Response
 {
 	/**
-	 * @var Array
+	 * @var array
 	 */
 	protected $weathers;
 	

@@ -15,7 +15,7 @@ class Weather
 	private $city;
 	
 	/**
-	 * @var date
+	 * @var \DateTime
 	 */
 	private $wdate;
 	
@@ -54,7 +54,7 @@ class Weather
 	/**
 	 * Set Weather date
 	 * 
-	 * @param date $wdate
+	 * @param \DateTime $wdate
 	 * @return Weather
 	 */
 	public function setWdate($wdate)
@@ -66,7 +66,7 @@ class Weather
 	/**
 	 * Get Weather date
 	 * 
-	 * @return date $wdate
+	 * @return \DateTime $wdate
 	 */
 	public function getWdate()
 	{

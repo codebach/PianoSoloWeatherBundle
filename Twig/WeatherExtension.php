@@ -16,7 +16,7 @@ class WeatherExtension extends \Twig_Extension
 	/**
 	 * @var WeatherFactory
 	 */
-	private $weatherFactroy;
+	private $weatherFactory;
 	
 	/**
 	 * @var ContainerInterface
@@ -24,11 +24,11 @@ class WeatherExtension extends \Twig_Extension
 	private $container;
 	
 	/**
-	 * @param WeatherHandler $weatherHandler
+	 * @param WeatherFactory $weatherFactory
 	 */
-	public function __construct(WeatherFactory $weatherFactroy, ContainerInterface $container)
+	public function __construct(WeatherFactory $weatherFactory, ContainerInterface $container)
 	{
-		$this->weatherFactroy = $weatherFactroy;
+		$this->weatherFactory = $weatherFactory;
 		$this->container = $container;
 	}
 	
@@ -51,11 +51,11 @@ class WeatherExtension extends \Twig_Extension
 	 * 
 	 * @param \Twig_Environment $environment
 	 * @param mixed (integer|string) $city
-	 * @return template
+	 * @return string The rendered template
 	 */
 	public function weather(\Twig_Environment $environment, $city)
 	{
-		$weathers = $this->weatherFactroy->getWeatherObject($city);
+		$weathers = $this->weatherFactory->getWeatherObject($city);
 		
 		$downloadEnabled = $this->container->getParameter('pianosolo.weather.options.download_csv');
 		
@@ -72,11 +72,11 @@ class WeatherExtension extends \Twig_Extension
 	 * @param \Twig_Environment $environment
 	 * @param mixed (integer|string) $city
 	 * @param int $days
-	 * @return template
+	 * @return string The rendered template
 	 */
 	public function forecast(\Twig_Environment $environment, $city, $days = '3')
 	{
-		$weathers = $this->weatherFactroy->getForecastObject($city, $days);
+		$weathers = $this->weatherFactory->getForecastObject($city, $days);
 		
 		$downloadEnabled = $this->container->getParameter('pianosolo.weather.options.download_csv');
 		
