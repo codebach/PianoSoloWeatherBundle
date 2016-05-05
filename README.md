@@ -68,7 +68,7 @@ $weather = $weatherService->getData('forecast', array('id' => 12345, 'lat' => 12
 Or get data with city name and type
 ``` php
 $weatherService = $this->get('pianosolo.weather');
-$weather = $weatherService->getCityData('weather', Berlin, array('param' => value));
+$weather = $weatherService->getCityData('weather', 'Berlin', array('param' => value));
 ```
 
 ##### As Twig Extension
