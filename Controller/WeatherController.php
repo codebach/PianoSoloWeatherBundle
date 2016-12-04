@@ -5,6 +5,7 @@ namespace PianoSolo\WeatherBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use PianoSolo\WeatherBundle\Http\WeatherCsvResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class WeatherController extends Controller
 {
@@ -13,6 +14,8 @@ class WeatherController extends Controller
      *
      * @param mixed (integer|string) $city
      * @param integer $days
+     *
+     * @return Response
      */
     public function generateCsvAction($city, $days){
 

@@ -2,8 +2,6 @@
 
 namespace PianoSolo\WeatherBundle\Twig;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use PianoSolo\WeatherBundle\Factory\WeatherFactory;
 
 /**
@@ -25,6 +23,7 @@ class WeatherExtension extends \Twig_Extension
 
     /**
      * @param WeatherFactory $weatherFactory
+     * @param boolean        $downloadEnabled
      */
     public function __construct(WeatherFactory $weatherFactory, $downloadEnabled)
     {
@@ -72,7 +71,7 @@ class WeatherExtension extends \Twig_Extension
      * @param int $days
      * @return string The rendered template
      */
-    public function forecast(\Twig_Environment $environment, $city, $days = '3')
+    public function forecast(\Twig_Environment $environment, $city, $days = 3)
     {
         $weathers = $this->weatherFactory->getForecastObject($city, $days);
 

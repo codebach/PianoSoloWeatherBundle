@@ -2,6 +2,7 @@
 
 namespace PianoSolo\WeatherBundle\Tests\Service;
 
+use PianoSolo\WeatherBundle\Entity\Weather;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 use PianoSolo\WeatherBundle\Service\Weather\OpenWeatherMapService;
@@ -51,6 +52,7 @@ class OpenWeatherMapServiceTest extends KernelTestCase
     {
         $response = $this->service->getWeatherObject('istanbul');
 
+        /** @var Weather $weather */
         foreach ($response as $weather) {
             $this->assertTrue($weather->getCity() == 'Istanbul');
             $this->assertTrue(is_numeric($weather->getTemperature()));
@@ -81,6 +83,7 @@ class OpenWeatherMapServiceTest extends KernelTestCase
 
         $this->assertEquals(5, count($response));
 
+        /** @var Weather $forecast */
         foreach ($response as $forecast) {
             $this->assertTrue($forecast->getCity() == 'Istanbul');
             $this->assertTrue(is_numeric($forecast->getTemperature()));

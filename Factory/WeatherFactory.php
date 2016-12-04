@@ -73,9 +73,8 @@ class WeatherFactory
      */
     public function getForecast($city, $days = 3)
     {
-        // Cheking if cache is enabled
+        // Checking if cache is enabled
         if($this->cacheIsEnabled){
-
             $cacheID = $city.$days.'fc';
 
             if(!$weathers = $this->getCache($cacheID)){
@@ -98,9 +97,8 @@ class WeatherFactory
      */
     public function getForecastObject($city, $days = 3)
     {
-        // Cheking if cache is enabled
+        // Checking if cache is enabled
         if($this->cacheIsEnabled){
-
             $cacheID = $city.$days.'fcO';
 
             if(!$weathers = $this->getCache($cacheID)){
@@ -121,9 +119,8 @@ class WeatherFactory
      */
     public function getWeather($city)
     {
-        // Cheking if cache is enabled
+        // Checking if cache is enabled
         if($this->cacheIsEnabled){
-
             $cacheID = $city.'w';
 
             if(!$weather = $this->getCache($cacheID)){
@@ -144,9 +141,8 @@ class WeatherFactory
      */
     public function getWeatherObject($city)
     {
-        // Cheking if cache is enabled
+        // Checking if cache is enabled
         if($this->cacheIsEnabled){
-
             $cacheID = $city.'wO';
 
             if(!$weather = $this->getCache($cacheID)){

@@ -34,6 +34,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 
     /**
      * @param HttpClientInterface $httpClient
+     * @param string              $apiKey
      */
     public function __construct(HttpClientInterface $httpClient, $apiKey)
     {
