@@ -3,38 +3,39 @@
 namespace PianoSolo\WeatherBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use PianoSolo\WeatherBundle\Http\WeatherCsvResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WeatherController extends Controller
 {
     /**
      * Downloads Weather List of City as CSV
      *
-     * @param mixed (integer|string) $city
+     * @param mixed (int|string) $city
      * @param integer $days
      *
      * @return Response
+     *
+     * @throws NotFoundHttpException
      */
-    public function generateCsvAction($city, $days){
-
-        if($this->getParameter('pianosolo.weather.options.download_csv') === TRUE){
-
+    public function generateCsvAction($city, $days)
+    {
+        if ($this->getParameter('pianosolo.weather.options.download_csv') === TRUE) {
             $weatherHandler = $this->get('pianosolo.weather');
+
             $weathers = $weatherHandler->getForecastObject($city, $days);
 
-            if(!empty($weathers)){
-
+            if (!empty($weathers)) {
                 // Creating CSV Response
                 $csvResponse = new WeatherCsvResponse($weathers, $city);
-                return $csvResponse->createCsvResponse();
 
-            }else{
-                throw $this->createNotFoundException('City Not Found!');
+                return $csvResponse->createCsvResponse();
             }
-        }else{
-            throw $this->createNotFoundException('Page Not Found!');
+
+            throw $this->createNotFoundException('City Not Found!');
         }
+
+        throw $this->createNotFoundException('Page Not Found!');
     }
 }

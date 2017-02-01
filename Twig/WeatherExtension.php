@@ -50,7 +50,8 @@ class WeatherExtension extends \Twig_Extension
      *
      * @param \Twig_Environment $environment
      * @param mixed (integer|string) $city
-     * @return string The rendered template
+     *
+     * @return string
      */
     public function weather(\Twig_Environment $environment, $city)
     {
@@ -69,7 +70,8 @@ class WeatherExtension extends \Twig_Extension
      * @param \Twig_Environment $environment
      * @param mixed (integer|string) $city
      * @param int $days
-     * @return string The rendered template
+     *
+     * @return string
      */
     public function forecast(\Twig_Environment $environment, $city, $days = 3)
     {

@@ -28,11 +28,6 @@ class OpenWeatherMapService implements WeatherServiceInterface
     private $httpClient;
 
     /**
-     * @var array Weather
-     */
-    private $weathers = array();
-
-    /**
      * @param HttpClientInterface $httpClient
      * @param string              $apiKey
      */
@@ -47,7 +42,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
      */
     public function getData($type, $param = null)
     {
-        if(!isset($param['APPID'])){
+        if (!isset($param['APPID'])) {
             $param['APPID'] = $this->apiKey;
         }
 
@@ -60,7 +55,6 @@ class OpenWeatherMapService implements WeatherServiceInterface
         $url .= implode('&', $urlKeys);
 
         return json_decode($this->httpClient->getResponseBody($url));
-
     }
 
     /**
@@ -68,11 +62,13 @@ class OpenWeatherMapService implements WeatherServiceInterface
      */
     public function getCityData($type, $city, $param = null)
     {
-        if(is_numeric($city)){
+        if (is_numeric($city)) {
             $param['id'] = $city;
-        }else{
-            $param['q'] = $city;
+
+            return $this->getData($type, $param);
         }
+
+        $param['q'] = $city;
 
         return $this->getData($type, $param);
     }
@@ -92,7 +88,9 @@ class OpenWeatherMapService implements WeatherServiceInterface
     {
         $results = $this->getWeather($city);
 
-        if($results->cod === 200){
+        $weathers = array();
+
+        if ($results->cod === 200) {
             $date = date("d-m-Y");
 
             $newWeather = new Weather();
@@ -102,10 +100,10 @@ class OpenWeatherMapService implements WeatherServiceInterface
             $cTemp = $results->main->temp-273; //Celcius
             $newWeather->setTemperature(number_format($cTemp,1));
 
-            $this->weathers[] = $newWeather;
+            $weathers[] = $newWeather;
         }
 
-        return $this->weathers;
+        return $weathers;
     }
 
     /**
@@ -123,11 +121,13 @@ class OpenWeatherMapService implements WeatherServiceInterface
     {
         $results = $this->getForecast($city, $days);
 
-        if($results->cod === '200'){
-            $date = date("d-m-Y");
-            foreach ($results->list as $list) {
+        $weathers = array();
 
-                if(count($this->weathers)>0){
+        if ($results->cod === '200') {
+            $date = date("d-m-Y");
+
+            foreach ($results->list as $list) {
+                if(count($weathers)>0){
                     $date = strftime("%d-%m-%Y", strtotime("$date +1 day"));
                 }
 
@@ -138,10 +138,10 @@ class OpenWeatherMapService implements WeatherServiceInterface
                 $cTemp = $list->temp->day-273; //Celcius
                 $newWeather->setTemperature(number_format($cTemp,1));
 
-                $this->weathers[] = $newWeather;
+                $weathers[] = $newWeather;
             }
         }
 
-        return $this->weathers;
+        return $weathers;
     }
 }

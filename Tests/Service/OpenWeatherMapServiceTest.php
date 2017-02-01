@@ -4,7 +4,6 @@ namespace PianoSolo\WeatherBundle\Tests\Service;
 
 use PianoSolo\WeatherBundle\Entity\Weather;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-
 use PianoSolo\WeatherBundle\Service\Weather\OpenWeatherMapService;
 use PianoSolo\WeatherBundle\Service\HttpClient\GuzzleHttpClient;
 

@@ -2,6 +2,8 @@
 
 namespace PianoSolo\WeatherBundle\Service\Weather;
 
+use PianoSolo\WeatherBundle\Entity\Weather;
+
 /**
  * Gets weather and forecast from api
  * 
@@ -14,6 +16,7 @@ interface WeatherServiceInterface
      *
      * @param string $type
      * @param array $param
+     *
      * @return \stdClass
      */
     public function getData($type, $param);
@@ -24,6 +27,7 @@ interface WeatherServiceInterface
      * @param string $type
      * @param mixed (integer|string) $city
      * @param array $param
+     *
      * @return \stdClass
      */
     public function getCityData($type, $city, $param);
@@ -32,6 +36,7 @@ interface WeatherServiceInterface
      * Gets Weather
      *
      * @param mixed (integer|string) $city
+     *
      * @return \stdClass
      */
     public function getWeather($city);
@@ -40,7 +45,8 @@ interface WeatherServiceInterface
      * Gets Weather as Object
      *
      * @param mixed (integer|string) $city
-     * @return array Weather Object
+     *
+     * @return Weather[]
      */
     public function getWeatherObject($city);
 
@@ -49,6 +55,7 @@ interface WeatherServiceInterface
      *
      * @param mixed (integer|string)$city
      * @param int $days
+     *
      * @return \stdClass
      */
     public function getForecast($city, $days);
@@ -58,7 +65,8 @@ interface WeatherServiceInterface
      *
      * @param mixed (integer|string) $city
      * @param int $days
-     * @return array Weather Object
+     *
+     * @return Weather[]
      */
     public function getForecastObject($city, $days);
 }

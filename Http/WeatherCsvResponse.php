@@ -27,9 +27,10 @@ class WeatherCsvResponse extends Response
      * @param array $weathers
      * @param mixed (integer|string) $fileName
      */
-    public function __construct(Array $weathers, $fileName)
+    public function __construct(array $weathers, $fileName)
     {
         parent::__construct();
+
         $this->weathers = $weathers;
         $this->fileName = $fileName;
     }

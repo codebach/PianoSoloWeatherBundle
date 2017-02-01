@@ -2,6 +2,7 @@
 
 namespace PianoSolo\WeatherBundle\Factory;
 
+use PianoSolo\WeatherBundle\Entity\Weather;
 use PianoSolo\WeatherBundle\Service\Weather\WeatherServiceInterface;
 use Doctrine\Common\Cache\ApcCache;
 
@@ -44,9 +45,10 @@ class WeatherFactory
      *
      * @param string $type
      * @param array $param
+     *
      * @return /stdClass
      */
-    public function getData($type, Array $param = null)
+    public function getData($type, array $param = null)
     {
         return $this->weatherService->getData($type, $param);
     }
@@ -57,9 +59,10 @@ class WeatherFactory
      * @param string $type
      * @param mixed (integer|string) $city
      * @param array $param
+     *
      * @return /stdClass
      */
-    public function getCityData($type, $city, Array $param = null)
+    public function getCityData($type, $city, array $param = null)
     {
         return $this->weatherService->getCityData($type, $city, $param);
     }
@@ -69,23 +72,24 @@ class WeatherFactory
      *
      * @param mixed (integer|string) $city
      * @param int $days
+     *
      * @return /stdClass
      */
     public function getForecast($city, $days = 3)
     {
         // Checking if cache is enabled
-        if($this->cacheIsEnabled){
+        if ($this->cacheIsEnabled) {
             $cacheID = $city.$days.'fc';
 
-            if(!$weathers = $this->getCache($cacheID)){
+            if (!$weathers = $this->getCache($cacheID)) {
                 $weathers = $this->weatherService->getForecast($city, $days);
                 $this->saveCache($cacheID, $weathers);
+
+                return $weathers;
             }
-        }else{
-            $weathers = $this->weatherService->getForecast($city, $days);
         }
 
-        return $weathers;
+        return $this->weatherService->getForecast($city, $days);
     }
 
     /**
@@ -93,81 +97,88 @@ class WeatherFactory
      *
      * @param mixed (integer|string) $city
      * @param int $days
-     * @return array Weather Object
+     *
+     * @return Weather[]
      */
     public function getForecastObject($city, $days = 3)
     {
         // Checking if cache is enabled
-        if($this->cacheIsEnabled){
+        if ($this->cacheIsEnabled) {
             $cacheID = $city.$days.'fcO';
 
-            if(!$weathers = $this->getCache($cacheID)){
+            if (!$weathers = $this->getCache($cacheID)) {
                 $weathers = $this->weatherService->getForecastObject($city, $days);
                 $this->saveCache($cacheID, $weathers);
+
+                return $weathers;
             }
-        }else{
-            $weathers = $this->weatherService->getForecastObject($city, $days);
         }
-        return $weathers;
+
+        return $this->weatherService->getForecastObject($city, $days);
     }
 
     /**
      * Gets the weather as response
      *
      * @param mixed (integer|string) $city
+     *
      * @return /stdClass
      */
     public function getWeather($city)
     {
         // Checking if cache is enabled
-        if($this->cacheIsEnabled){
+        if ($this->cacheIsEnabled) {
             $cacheID = $city.'w';
 
-            if(!$weather = $this->getCache($cacheID)){
+            if (!$weather = $this->getCache($cacheID)) {
                 $weather = $this->weatherService->getWeather($city);
                 $this->saveCache($cacheID, $weather);
+
+                return $weather;
             }
-        }else{
-            $weather = $this->weatherService->getWeather($city);
         }
-        return $weather;
+
+        return $this->weatherService->getWeather($city);
     }
 
     /**
      * Gets weather as Weather object
      *
      * @param mixed (integer|string) $city
-     * @return array of Weather Object
+     *
+     * @return Weather[]
      */
     public function getWeatherObject($city)
     {
         // Checking if cache is enabled
-        if($this->cacheIsEnabled){
+        if ($this->cacheIsEnabled) {
             $cacheID = $city.'wO';
 
-            if(!$weather = $this->getCache($cacheID)){
-                $weather = $this->weatherService->getWeatherObject($city);
-                $this->saveCache($cacheID, $weather);
+            if (!$weathers = $this->getCache($cacheID)) {
+                $weathers = $this->weatherService->getWeatherObject($city);
+                $this->saveCache($cacheID, $weathers);
+
+                return $weathers;
             }
-        }else{
-            $weather = $this->weatherService->getWeatherObject($city);
         }
-        return $weather;
+
+        return $this->weatherService->getWeatherObject($city);
     }
 
     /**
      * Gets cache by cacheID
      *
      * @param mixed (integer|string) $cacheID
-     * @return mixed (Weather|boolean false)
+     *
+     * @return mixed (Weather|boolean)
      */
     private function getCache($cacheID)
     {
         if ($this->appCache->contains($cacheID)) {
             return unserialize($this->appCache->fetch($cacheID));
-        }else{
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -176,8 +187,8 @@ class WeatherFactory
      * @param mixed (integer|string) $cacheID
      * @param array $weathers
      */
-    private function saveCache($cacheID, $weather)
+    private function saveCache($cacheID, array $weathers)
     {
-        $this->appCache->save($cacheID, serialize($weather), 3600);
+        $this->appCache->save($cacheID, serialize($weathers), 3600);
     }
 }
