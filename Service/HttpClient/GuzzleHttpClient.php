@@ -2,7 +2,7 @@
 
 namespace PianoSolo\WeatherBundle\Service\HttpClient;
 
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 
 /**
  * GuzzleHttpClient for Requesting Api
@@ -26,9 +26,8 @@ class GuzzleHttpClient implements HttpClientInterface
      */
     public function getResponseBody($url)
     {
-        $request = $this->client->get($url);
-        $response = $request->send();
+        $request = $this->client->request('GET', $url);
 
-        return $response->getBody();
+        return $request->getBody();
     }
 }
