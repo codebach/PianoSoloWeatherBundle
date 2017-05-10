@@ -34,10 +34,10 @@ public function registerBundles()
 
 ```yaml
 piano_solo_weather:
-	api_key: "YourApiKey" # Required (OpenWeatherMap Api Key)
-	options:
-    	download_csv: false # Default True
-    	cache: true # Default False (To use cache the system needs Php-Apc cache)
+    api_key: "YourApiKey" # Required (OpenWeatherMap Api Key)
+    options:
+        download_csv: false # Default True
+        cache: true # Default False (To use cache the system needs Php-Apc cache)
 ```
 
 To install Php-Apc rund this command:
@@ -50,7 +50,7 @@ sudo apt-get install php-apc
 
 ```yaml
 pianosolo_weather:
-	resource: "@PianoSoloWeatherBundle/Resources/config/routing.yml"
+    resource: "@PianoSoloWeatherBundle/Resources/config/routing.yml"
 ```
 
 ### Usage
