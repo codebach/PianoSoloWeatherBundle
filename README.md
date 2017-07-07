@@ -6,6 +6,7 @@ as a Twig Extension and the second one as a service which brings all weather inf
 
 [![Latest Stable Version](https://poser.pugx.org/pianosolo/weather-bundle/v/stable)](https://packagist.org/packages/pianosolo/weather-bundle)
 [![License](https://poser.pugx.org/pianosolo/weather-bundle/license)](https://packagist.org/packages/pianosolo/weather-bundle)
+[![Downloads](https://poser.pugx.org/pianosolo/weather-bundle/downloads)](https://packagist.org/packages/pianosolo/weather-bundle)
 
 ### Installation 
 
