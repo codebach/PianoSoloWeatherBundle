@@ -63,13 +63,13 @@ Gets data from OpenWeatherMap api. Check api for usage: http://openweathermap.or
 Get data with type. Add url parameters in array.
 ``` php
 $weatherService = $this->get('pianosolo.weather');
-$weather = $weatherService->getData('forecast', array('id' => 12345, 'lat' => 12345, 'long' => 12345));
+$weather = $weatherService->getData('forecast', array('id' => 800, 'lat' => 52.52, 'lon' => 13.41));
 ```
 
 Or get data with city name and type
 ``` php
 $weatherService = $this->get('pianosolo.weather');
-$weather = $weatherService->getCityData('weather', 'Berlin', array('param' => value));
+$weather = $weatherService->getCityData('weather', 'Berlin', array('param' => 'value'));
 ```
 
 ##### As Twig Extension

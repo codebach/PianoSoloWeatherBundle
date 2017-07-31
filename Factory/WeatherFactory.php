@@ -30,8 +30,8 @@ class WeatherFactory
 
     /**
      * @param WeatherServiceInterface $weatherService
-     * @param ApcCache $apcCache
-     * @param string $cacheIsEnabled
+     * @param ApcCache                $apcCache
+     * @param bool                    $cacheIsEnabled
      */
     public function __construct(WeatherServiceInterface $weatherService, ApcCache $apcCache, $cacheIsEnabled)
     {
@@ -44,7 +44,7 @@ class WeatherFactory
      * Gets data from api
      *
      * @param string $type
-     * @param array $param
+     * @param array  $param
      *
      * @return /stdClass
      */
@@ -54,11 +54,9 @@ class WeatherFactory
     }
 
     /**
-     * Gets data by city name or id from api
-     *
      * @param string $type
-     * @param mixed (integer|string) $city
-     * @param array $param
+     * @param mixed  $city
+     * @param array  $param
      *
      * @return /stdClass
      */
@@ -68,10 +66,8 @@ class WeatherFactory
     }
 
     /**
-     * Gets the forecast as response
-     *
-     * @param mixed (integer|string) $city
-     * @param int $days
+     * @param mixed $city
+     * @param int   $days
      *
      * @return /stdClass
      */
@@ -93,10 +89,8 @@ class WeatherFactory
     }
 
     /**
-     * Gets forecast as Weather Object
-     *
-     * @param mixed (integer|string) $city
-     * @param int $days
+     * @param mixed $city
+     * @param int   $days
      *
      * @return Weather[]
      */
@@ -118,15 +112,13 @@ class WeatherFactory
     }
 
     /**
-     * Gets the weather as response
-     *
-     * @param mixed (integer|string) $city
+     * @param mixed $city
      *
      * @return /stdClass
      */
     public function getWeather($city)
     {
-        // Checking if cache is enabled
+        // Check if cache is enabled
         if ($this->cacheIsEnabled) {
             $cacheID = $city.'w';
 
@@ -142,9 +134,7 @@ class WeatherFactory
     }
 
     /**
-     * Gets weather as Weather object
-     *
-     * @param mixed (integer|string) $city
+     * @param mixed $city
      *
      * @return Weather[]
      */
@@ -166,11 +156,9 @@ class WeatherFactory
     }
 
     /**
-     * Gets cache by cacheID
+     * @param mixed $cacheID
      *
-     * @param mixed (integer|string) $cacheID
-     *
-     * @return mixed (Weather|boolean)
+     * @return mixed
      */
     private function getCache($cacheID)
     {
@@ -182,9 +170,7 @@ class WeatherFactory
     }
 
     /**
-     * Save cache by cacheID
-     *
-     * @param mixed (integer|string) $cacheID
+     * @param mixed $cacheID
      * @param mixed $weathers
      */
     private function saveCache($cacheID, $weathers)
