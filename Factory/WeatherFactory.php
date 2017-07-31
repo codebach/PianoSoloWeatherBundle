@@ -84,9 +84,9 @@ class WeatherFactory
             if (!$weathers = $this->getCache($cacheID)) {
                 $weathers = $this->weatherService->getForecast($city, $days);
                 $this->saveCache($cacheID, $weathers);
-
-                return $weathers;
             }
+
+            return $weathers;
         }
 
         return $this->weatherService->getForecast($city, $days);
@@ -109,9 +109,9 @@ class WeatherFactory
             if (!$weathers = $this->getCache($cacheID)) {
                 $weathers = $this->weatherService->getForecastObject($city, $days);
                 $this->saveCache($cacheID, $weathers);
-
-                return $weathers;
             }
+
+            return $weathers;
         }
 
         return $this->weatherService->getForecastObject($city, $days);
@@ -133,9 +133,9 @@ class WeatherFactory
             if (!$weather = $this->getCache($cacheID)) {
                 $weather = $this->weatherService->getWeather($city);
                 $this->saveCache($cacheID, $weather);
-
-                return $weather;
             }
+
+            return $weather;
         }
 
         return $this->weatherService->getWeather($city);
@@ -157,9 +157,9 @@ class WeatherFactory
             if (!$weathers = $this->getCache($cacheID)) {
                 $weathers = $this->weatherService->getWeatherObject($city);
                 $this->saveCache($cacheID, $weathers);
-
-                return $weathers;
             }
+
+            return $weathers;
         }
 
         return $this->weatherService->getWeatherObject($city);
@@ -185,9 +185,9 @@ class WeatherFactory
      * Save cache by cacheID
      *
      * @param mixed (integer|string) $cacheID
-     * @param array $weathers
+     * @param mixed $weathers
      */
-    private function saveCache($cacheID, array $weathers)
+    private function saveCache($cacheID, $weathers)
     {
         $this->appCache->save($cacheID, serialize($weathers), 3600);
     }
