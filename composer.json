@@ -1,5 +1,5 @@
 {
-    "name": "pianosolo/weather-bundle",
+    "name": "codebach/weather-bundle",
     "description": "Weather Bundle of Symfony",
     "license": "MIT",
     "type": "library",
@@ -10,17 +10,20 @@
         }
     ],
     "autoload": {
-        "psr-0": { "PianoSolo\\WeatherBundle": "" }
+        "psr-4": { "Codebach\\WeatherBundle\\": "" },
+        "exclude-from-classmap": [
+            "Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": { "Codebach\\WeatherBundle\\Tests\\": "Tests/" }
     },
     "require": {
-        "php": ">=5.3.9",
+        "php": ">=7.1",
         "symfony/symfony": "~2.7|~3.0",
         "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
-    },
-    "target-dir": "PianoSolo/WeatherBundle",
-    "extra": {
     }
 }
