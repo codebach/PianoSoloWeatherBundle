@@ -23,4 +23,4 @@ services:
         class: PianoSolo\WeatherBundle\Twig\WeatherExtension
         arguments: ["@pianosolo.weather","%pianosolo.weather.options.download_csv%"]
         tags:
-            - { name:twig.extension }
+            - { name: twig.extension }
